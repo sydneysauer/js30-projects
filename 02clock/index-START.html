@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+  <div class="button-container">
+    <button class="analog selected"> ANALOG </button>
+    <button class="digital"> DIGITAL </button>
+  </div>
+
+
+    <div class="analog-clock visible">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+
+    <div class="digital-clock invisible">
+        <p><span class="clock-data">Clock Data here</span></p>
+    </div>
+
+
+  <style>
+    html {
+      background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    button {
+      border: 1px solid black;
+      border-radius: 15px;
+      background-color: white;
+      color: black;
+      width: 10vw;
+      height: auto;
+      margin-top: 100px;
+      outline: none;
+    }
+
+    .invisible {
+      display: none;
+    }
+
+    .visible {
+      display: block;
+    }
+
+    .analog-clock {
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .hand {
+      width: 50%;
+      height: 6px;
+      background: black;
+      position: absolute;
+      top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1)
+
+    }
+
+    .selected {
+      background-color: gray;
+    }
+
+    .clock-data {
+      font-size: 100px;
+      color: white;
+     text-shadow: 1px 1px black;
+     margin-top: 100px;
+    }
+
+  </style>
+
+  <script>
+    const secondHand = document.querySelector('.second-hand');
+    console.log(secondHand);
+    const minHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
+
+    function createAnalog() {
+      const now = new Date();
+
+      const seconds = now.getSeconds();
+      const moveSeconds = ((seconds / 60) * 360) + 90;
+      secondHand.style.transform = `rotate(${moveSeconds}deg)`;
+
+      const mins = now.getMinutes();
+      const moveMins = ((mins / 60) * 360) + 90;
+      minHand.style.transform = `rotate(${moveMins}deg)`;
+
+      const hours = now.getHours();
+      console.log(hours);
+      const moveHours = ((hours / 12) * 360) + 90;
+      hourHand.style.transform = `rotate(${moveHours}deg)`;
+    }
+
+    function createDigital() {
+      const now = new Date();
+      var sec = now.getSeconds();
+      var min = now.getMinutes();
+      var hour = now.getHours();
+      // Format properly 
+      if (sec < 10) {
+        sec = "0" + sec;
+      }
+      if (min < 10) {
+        min = "0" + min;
+      }
+      const output = hour + ":" + min + "." + sec;
+      document.querySelector(".clock-data").innerHTML = output;
+    }
+
+    // Create analog clock
+    setInterval(createAnalog, 1000);
+
+    // Create digital clock   
+    setInterval(createDigital, 1000);
+
+    // Toggle buttons onclick
+    
+    const buttons = document.getElementsByTagName("button");
+    function deselect(item) {
+      item.classList.remove("selected");
+    }
+    //TODO redefine foreach, it's making everything grey
+    for (button of buttons) {
+      button.addEventListener("click", function toggleVisibility(e) {
+        for (const button of buttons) {
+          deselect(button);
+        }
+        e.target.classList.add("selected");
+
+        // Toggle which div is showing
+        const visibleDivs = document.querySelectorAll(".invisible");
+        const invisibleDivs = document.querySelectorAll(".visible");
+        for (div of visibleDivs) {
+          div.classList.remove("invisible");
+          div.classList.add("visible");
+
+        }
+        
+        for (div of invisibleDivs) {
+          div.classList.remove("visible");
+          div.classList.add("invisible");
+
+        }
+    });
+ }
+  </script>
+</body>
+</html>
