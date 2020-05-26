@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>I ♡ Anna Perry</title>
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <style>
+    html {
+      box-sizing: border-box;
+      background: #ffc600;
+      font-family: 'helvetica neue';
+      font-size: 20px;
+      font-weight: 200;
+    }
+    
+    body {
+      margin: 0;
+    }
+    
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+
+    .panels {
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .panel {
+      background: #6B0F9C;
+      color: white;
+      text-align: center;
+      align-items: center;
+      /* Safari transitionend event.propertyName === flex */
+      /* Chrome + FF transitionend event.propertyName === flex-grow */
+      transition:
+        font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        background 0.2s;
+      font-size: 20px;
+      background-size: cover;
+      background-position: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel1 { background-image:url(img/hoby.jpg); }  
+    .panel2 { background-image:url(img/clocktower.jpg); }
+    .panel3 { background-image:url(img/hammock.jpg); }    
+    .panel4 { background-image:url(img/mattress.jpg); }
+    .panel5 { background-image:url(img/party.jpg); }
+
+    /* Flex Children */
+    .panel > * {
+      margin: 0;
+      width: 100%;
+      transition: transform 0.5s;
+      flex: 1 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 33.3%;
+    }
+
+    .panel > *:first-child { transform: translateY(-100%);}
+    .panel.open-active > *:first-child { transform: translateY(0%);}
+    .panel > *:last-child { transform: translateY(200%); text-transform: none;}
+    .panel.open-active > *:last-child { transform: translateY(0%); }
+    
+    
+
+    .panel p {
+      text-transform: uppercase;
+      font-family: 'Amatic SC', cursive;
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+      font-size: 2em;
+      
+    }
+    
+    .panel p:nth-child(2) {
+      font-size: 5em;
+    }
+
+    .panel.open {
+      font-size: 40px;
+      flex: 5;
+    }
+    .panel p.long {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: large;
+      margin: 0;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+  @media only screen and (max-width: 800px) {
+    .panels {
+      flex-direction: column;
+    }
+    .panel {
+      flex-direction: row;
+      
+    }
+    .panel > * {
+      height: auto;
+      transform: none;
+    }
+    .mobilehidden {
+      display: none;
+    }
+  }
+
+  </style>
+
+
+  <div class="panels">
+    <div class="panel panel1">
+      <p class="mobilehidden">May 2017</p>
+      <p class="big">ANNA</p>   
+      <p class="long mobilehidden">First and foremost, we survived a cult together. Like, how much cooler of an origin story
+        could we possibly have. This camp SUCKED but was it totally worth it to meet you? Yes. 
+      </p>
+    </div>
+    <div class="panel panel2">
+      <p class="mobilehidden">Mar 2019</p>
+      <p class="big">PERRY</p>     
+      <p class="long mobilehidden"> This was probably the most exciting thing I've ever done. One of the best parts of being your friend is your 
+        adventrous spirit that always keeps things interesting. Never a dull moment. </p>
+    </div>
+    <div class="panel panel3">
+      <p class="mobilehidden">Jun 2019</p>
+      <p class="big">
+        IS
+      </p>  
+      <p class="long mobilehidden">Remember when the police pulled up here and got mad at us?? Yeah, so do I. This was such a fun night, and it's a 
+        prime example of how you can make even the little things meaningful and memorable. </p>
+    </div>
+    <div class="panel panel4">
+      <p class="mobilehidden">Aug 2019</p>
+      <p class="big">19</p>     
+      <p class="long mobilehidden">Bro this mattress topper was so soft, even if it did smell like fish. I love this pic because it 
+        reminds me how much my family adores you, which is so important in a friendship. 
+      </p>
+    </div>
+    <div class="panel panel5">
+      <p class="mobilehidden">Nov 2019</p>
+      <p class="big">2DAY</p>   
+      <p class="long mobilehidden">And finally, our most recent chapter...college! Going to school with you is such a blessing, and I'm 
+        so glad you didn't go to U of L and choose Robbie Pinto over me. 
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const panels = document.querySelectorAll('.panel');
+    panels.forEach(panel => panel.addEventListener("click", function toggle() {
+      this.classList.toggle("open");
+      this.classList.toggle("open-active");
+      this.children[1].classList.toggle("mobilehidden");
+      this.children[2].classList.toggle("mobilehidden");
+     
+    }));
+
+  </script>
+
+
+
+</body>
+</html>
