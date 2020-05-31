@@ -96,6 +96,35 @@
   </div>
 
 <script>
+  const checkboxes = Array.from(document.querySelectorAll("input[type=checkbox]"));
+  var last;
+  var curr;
+  var shift = false;
+
+  document.addEventListener("keydown", function(e) {
+    shift = e.shiftKey;
+  });
+  document.addEventListener("keyup", function(e) {
+    shift = false;
+  });
+
+  checkboxes.forEach(box => {
+    box.addEventListener("click", function() {
+      curr = checkboxes.indexOf(box);
+      if (shift) {
+          if (curr > last) {
+            for (var i = last; i < curr; i++) {
+              checkboxes[i].checked = true;
+            } 
+          } else {
+            for (var i = curr; i < last; i++) {
+              checkboxes[i].checked = true;
+            }
+          }         
+      }
+      last = curr;  
+    })
+  });
 </script>
 </body>
 </html>
